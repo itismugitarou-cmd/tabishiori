@@ -2243,14 +2243,132 @@ const CAR_PROVIDERS = [
   {label: '楽天トラベル レンタカー', url: () => rakutenWrap('https://travel.rakuten.co.jp/cars/')}
 ];
 
+// 画面の文言。英語ページでは en.js の MSG_EN に差し替わる
+const MSG_JA = {
+  lang: 'ja',
+  locale: 'ja-JP',
+  hours: (hh, mm) => (hh ? hh + '時間' : '') + (mm ? mm + '分' : (hh ? '' : '0分')),
+  muniLabel: m => `${m.name}(${m.pref}${m.gun})`,
+  picked: (m, cur) => `${m.pref}${m.gun}${m.name}${cur ? '・おすすめスポット登録済み' : ''}`,
+  suggSub: m => m.pref + m.gun,
+  suggCurated: 'おすすめあり',
+  modes: {local: '現地', plane: '飛行機', train: '電車', shinkansen: '新幹線・特急'},
+  wikiLang: 'ja',
+  wikiTipDefault: '詳しくはWikipediaの記事で',
+  wikiLead: where => `${where}とその周辺の見どころを、Wikipediaの閲覧数をもとに「定番」と「穴場」に分けて組み立てました。`,
+  wikiStay: name => `${name}の中心部や主要駅の近くに泊まると動きやすいです。`,
+  defaultFood: '地元の食堂',
+  depart: n => `${n}を出発`,
+  departSub: (l, h) => `${l}で約${h}(乗り換え・待ち時間込みの目安)`,
+  arrive: n => `${n}に到着`,
+  arriveSub: '大きな荷物はホテルかコインロッカーに預けて身軽に',
+  lunch: f => `昼ごはん:${f}`,
+  lunchSub: '人気店は11時台か13時半以降が入りやすい',
+  free: '自由時間',
+  freeSub: '気に入った場所をもう一度訪ねたり、カフェや宿でのんびり。「スポットを1つ足す」で予定を足せます',
+  gifts: 'おみやげ選び',
+  giftsSub: g => g ? `${g}が定番です` : '駅や空港のおみやげ売り場で',
+  leave: n => `${n}を出発`,
+  leaveSub: (l, h) => `${l}で約${h}`,
+  home: n => `${n}に到着`,
+  homeSub: 'おつかれさまでした',
+  dinner: f => `夜ごはん:${f}`,
+  stay: (n, i) => `${n}泊(${i}泊目)`,
+  localTransport: '現地の交通',
+  rentalShare: 'レンタカー(割り勘)',
+  wx: {0: '快晴', 1: '晴れ', 2: '晴れ時々くもり', 3: 'くもり', 45: '霧', 48: '霧', 51: '霧雨', 53: '霧雨', 55: '霧雨', 61: '小雨', 63: '雨', 65: '大雨', 66: 'みぞれ', 67: 'みぞれ', 71: '小雪', 73: '雪', 75: '大雪', 77: '雪', 80: 'にわか雨', 81: 'にわか雨', 82: '強いにわか雨', 85: 'にわか雪', 86: 'にわか雪', 95: '雷雨', 96: '雷雨', 99: '雷雨'},
+  dayLabel: d => `${d.getMonth() + 1}/${d.getDate()}(${'日月火水木金土'[d.getDay()]})`,
+  wxTitle: '現地の天気',
+  wxTitleFirst: '現地の天気(初日)',
+  wxLoading: '取得中…',
+  wxOut: '予報は出発の約2週間前から表示します',
+  wxFailed: 'いまは天気予報を取得できませんでした',
+  wxRange: '予報の範囲外です',
+  wxDay: (w, max, min, pop) => `<b>${w}</b> ${max}° / ${min}° ・降水 ${pop}%`,
+  wxRainy: n => `雨の可能性が高い日が${n}日あります`,
+  wxFine: '大きな崩れはなさそうです',
+  wxRedo: '雨の日モードで作り直す',
+  pack: {base: ['財布・身分証・交通系ICカード', 'スマホの充電器とモバイルバッテリー', '歩きやすい靴', '常備薬'],
+    clothes: n => `着替え(${n}泊分)`, toiletries: '洗面用具・スキンケア',
+    coldNorth: 'しっかりした防寒着・滑りにくい靴', cold: 'コート・手袋', sun: ['日焼け止め・帽子', '汗ふきシート'], mild: '羽織れる上着',
+    umbrella: '折りたたみ傘', swim: '水着・ラッシュガード', towel: '温泉用の小さいタオル', goshuin: '御朱印帳(集めている人は)',
+    license: '運転免許証(レンタカー用)', bag: 'エコバッグ(おみやげ用)'},
+  dur: n => n ? `${n}泊${n + 1}日` : '日帰り',
+  hiddenRate: p => `穴場率${p}%`,
+  ratio: (f, h) => `定番 ${f}% ・ 穴場 ${h}%`,
+  hidden: '穴場', classic: '定番',
+  stamp: '穴場',
+  stayAbout: h => `滞在 約${h}`,
+  free0: '無料〜',
+  fromYen: y => `${y}〜`,
+  rainOk: '雨でもOK',
+  areaLabel: a => `${a}エリア`,
+  map: '地図',
+  swap: 'ほかの場所にする',
+  remove: '外す',
+  dayNo: n => `${n}日目`,
+  addSpot: 'スポットを1つ足す',
+  route: 'この日のルートを地図で見る',
+  people: n => `${n}人`,
+  trTitle: '移動(片道の目安)',
+  trValue: (l, h) => `${l} 約${h}`,
+  trLocal: '現地出発',
+  trSub: (k, y) => `直線で約${k}km・${y}前後`,
+  trLocalSub: '移動時間なしで組みました',
+  budget: '予算(1人あたり)',
+  breakdown: '内訳を見る',
+  bMove: '往復の交通費', bStay: n => `宿泊(${n}泊)`, bMeal: '食事', bFees: '拝観・入場料', bTotal: n => `${n}の合計`,
+  planTypes: 'プランの種類',
+  shuffle: '別の組み合わせにする',
+  save: 'このプランを保存',
+  copyText: 'テキストでコピー',
+  copyLink: '共有リンクをコピー',
+  legend: '<span class="tag-f">定番</span>有名な観光地 <span class="stamp">穴場</span>知る人ぞ知る場所 <span class="rain" style="color:var(--matcha);font-weight:700">雨でもOK</span>屋内で楽しめる',
+  bookTitle: n => `${n}の宿をさがす`,
+  carHint: '見どころが離れているので、レンタカーがあると回りやすい行き先です。',
+  eatTitle: n => `${n}で食べたいもの`,
+  eatNone: '地元の人が並ぶ店や、道の駅の食堂を探してみてください。',
+  packTitle: '持ち物チェックリスト',
+  savedTitle: '保存したプラン',
+  open: '開く', del: '削除',
+  savedNone: '「このプランを保存」を押すと、このブラウザに保存されて後から開けます。',
+  textHead: (n, dur, v, from) => `【${n} ${dur}】${v}(${from}発)`,
+  textDay: (n, l) => `■ ${n}日目 ${l}`,
+  textFooter: 'たびしおりで作成',
+  copyFail: 'コピーできませんでした',
+  noSwap: '入れ替えられる場所がもうありません',
+  noAdd: '追加できる場所がもうありません',
+  added: n => `${n}を追加しました`,
+  needTo: '行き先を入れてください。',
+  searching: q => `「${q}」の見どころを探しています…`,
+  fetchFail: q => `いまは「${q}」の見どころを取りに行けませんでした。通信状況を確かめてもう一度お試しください。このプレビュー画面では外部への通信が止められているため、おすすめスポット登録済みの行き先だけ動きます。`,
+  notFound: q => `「${q}」の見どころが見つかりませんでした。候補から市区町村を選び直すか、近くの大きな町で試してください。`,
+  wikiNotice: 'この行き先はWikipediaの情報から自動で組み立てたプランです。所要時間や営業情報は特に注意して確認してください。',
+  fromUnknown: q => `出発地「${q}」の場所がわからなかったため、移動時間を入れずに組みました。`,
+  nightsOpt: n => n ? `${n}泊${n + 1}日` : '日帰り',
+  destHint: '全国の市区町村から検索できます(ひらがなもOK)。おすすめスポット登録済み:',
+  dfltFrom: '千代田区',
+  copied: 'コピーしました',
+  linkCopied: '共有リンクをコピーしました',
+  saved: '保存しました',
+  noDate: '日付なし',
+  savedTitleFmt: (n, dur, v, l) => `${n} ${dur}・${v}(${l})`
+};
+const T = typeof MSG_EN === 'undefined' ? MSG_JA : MSG_EN;
+const isEn = T.lang === 'en';
+const catLabel = c => isEn ? CAT_EN[c] || c : c;
+const muniName = m => isEn ? m.en : m.name;
+
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const yen = n => '¥' + (Math.round(n / 100) * 100).toLocaleString('ja-JP');
+const yen = n => '¥' + (Math.round(n / 100) * 100).toLocaleString(T.locale);
 const fmtT = h => { const m = Math.round(h * 60 / 5) * 5; return `${Math.floor(m / 60)}:${String(m % 60).padStart(2, '0')}`; };
-const fmtH = h => { const m = Math.round(h * 60 / 10) * 10; const hh = Math.floor(m / 60), mm = m % 60; return (hh ? hh + '時間' : '') + (mm ? mm + '分' : (hh ? '' : '0分')); };
+const fmtH = h => { const m = Math.round(h * 60 / 10) * 10; return T.hours(Math.floor(m / 60), m % 60); };
+// 英語版は保存プランのスポット名が違うので、保存先を分ける
 const store = {
-  get(k, d) { try { const v = localStorage.getItem('tabishiori.' + k); return v ? JSON.parse(v) : d; } catch { return d; } },
-  set(k, v) { try { localStorage.setItem('tabishiori.' + k, JSON.stringify(v)); } catch {} }
+  key: k => 'tabishiori.' + (isEn ? 'en.' : '') + k,
+  get(k, d) { try { const v = localStorage.getItem(this.key(k)); return v ? JSON.parse(v) : d; } catch { return d; } },
+  set(k, v) { try { localStorage.setItem(this.key(k), JSON.stringify(v)); } catch {} }
 };
 
 function rng(seed) {
@@ -2292,7 +2410,7 @@ function findPlace(q) {
 // ---------- 市区町村の検索 ----------
 const toHira = t => t.normalize('NFKC').replace(/[ァ-ヶ]/g, c => String.fromCharCode(c.charCodeAt(0) - 0x60));
 const muniByCode = new Map(MUNIS.map(m => [m.code, m]));
-const muniLabel = m => `${m.name}(${m.pref}${m.gun})`;
+const muniLabel = T.muniLabel;
 function curatedFor(m) {
   if (!m) return null;
   return DESTS.find(d => d.muni === '東京23区' ? (m.pref === '東京都' && /^131\d\d$/.test(m.code)) : m.name.startsWith(d.muni)) || null;
@@ -2305,7 +2423,9 @@ function searchMunis(q, limit = 8) {
   for (const m of MUNIS) {
     const full = m.pref + m.gun + m.name;
     let sc = -1;
-    if (m.name === q || m.name.replace(/(市|区|町|村)$/, '') === q) sc = 100;
+    if (isEn && m.romaji === q) sc = 100;
+    else if (isEn && m.romaji.startsWith(q)) sc = 80;
+    else if (m.name === q || m.name.replace(/(市|区|町|村)$/, '') === q) sc = 100;
     else if (m.name.startsWith(q)) sc = 80;
     else if (m.kana.startsWith(q)) sc = 70;
     else if (full.startsWith(q) || (q.length > 3 && full.includes(q))) sc = 60;
@@ -2315,6 +2435,8 @@ function searchMunis(q, limit = 8) {
     if (curatedFor(m)) sc += 6;
     if (m.code.includes('P')) sc += 4;
     if (m.name.endsWith('市')) sc += 3;
+    // 英語では同じ読みの町が多いので、人の多い市を先に出す
+    if (isEn && m.name.endsWith('区') && /^13/.test(m.code)) sc += 2;
     res.push([sc - m.name.length * 0.1, m]);
   }
   return res.sort((a, b) => b[0] - a[0]).slice(0, limit).map(x => x[1]);
@@ -2327,7 +2449,7 @@ function resolveMuni(input) {
   const hit = searchMunis(v, 1)[0];
   if (!hit) return null;
   const hv = toHira(v);
-  return (hit.name.startsWith(hv) || hit.kana.startsWith(hv) || (hit.pref + hit.gun + hit.name).startsWith(hv)) ? hit : null;
+  return (hit.name.startsWith(hv) || hit.kana.startsWith(hv) || (isEn && hit.romaji.startsWith(hv.replace(/[^a-z]/g, '')) && /[a-z]/.test(hv)) || (hit.pref + hit.gun + hit.name).startsWith(hv)) ? hit : null;
 }
 
 function setupCombo(input) {
@@ -2341,12 +2463,12 @@ function setupCombo(input) {
   let items = [], idx = -1;
   const showPicked = () => {
     const m = input.dataset.code && muniByCode.get(input.dataset.code);
-    if (picked) picked.textContent = m ? `${m.pref}${m.gun}${m.name}${curatedFor(m) ? '・おすすめスポット登録済み' : ''}` : '';
+    if (picked) picked.textContent = m ? T.picked(m, curatedFor(m)) : '';
   };
   const close = () => { list.hidden = true; input.setAttribute('aria-expanded', 'false'); idx = -1; };
-  const choose = m => { input.value = m.name; input.dataset.code = m.code; close(); showPicked(); };
+  const choose = m => { input.value = muniName(m); input.dataset.code = m.code; close(); showPicked(); };
   const draw = () => {
-    list.innerHTML = items.map((m, i) => `<li role="option" id="${list.id}-${i}" aria-selected="${i === idx}" data-i="${i}"><b>${esc(m.name)}</b><span>${esc(m.pref + m.gun)}</span>${curatedFor(m) ? '<em>おすすめあり</em>' : ''}</li>`).join('');
+    list.innerHTML = items.map((m, i) => `<li role="option" id="${list.id}-${i}" aria-selected="${i === idx}" data-i="${i}"><b>${esc(muniName(m))}</b><span>${esc(T.suggSub(m))}</span>${curatedFor(m) ? `<em>${T.suggCurated}</em>` : ''}</li>`).join('');
     input.setAttribute('aria-activedescendant', idx >= 0 ? `${list.id}-${idx}` : '');
   };
   input.addEventListener('input', () => {
@@ -2372,17 +2494,27 @@ const isHokkaido = p => p.lat > 41.3 && p.lng > 139.4;
 const isOkinawa = p => p.lat < 27.6;
 function transport(o, d) {
   const dist = km(o, d), road = dist * 1.25;
-  if (dist < 15) return {mode: 'local', label: '現地', hours: 0, cost: 0, km: dist};
+  if (dist < 15) return {mode: 'local', label: T.modes.local, hours: 0, cost: 0, km: dist};
   const plane = (isOkinawa(o) !== isOkinawa(d)) || ((isHokkaido(o) !== isHokkaido(d)) && dist > 450) || dist > 900;
-  if (plane) return {mode: 'plane', label: '飛行機', hours: dist / 650 + 2.3, cost: 14000 + dist * 11, km: dist};
-  if (dist < 110) return {mode: 'train', label: '電車', hours: road / 45 + 0.3, cost: Math.max(500, road * 22), km: dist};
-  return {mode: 'shinkansen', label: '新幹線・特急', hours: road / 175 + 0.6, cost: road * 30, km: dist};
+  if (plane) return {mode: 'plane', label: T.modes.plane, hours: dist / 650 + 2.3, cost: 14000 + dist * 11, km: dist};
+  if (dist < 110) return {mode: 'train', label: T.modes.train, hours: road / 45 + 0.3, cost: Math.max(500, road * 22), km: dist};
+  return {mode: 'shinkansen', label: T.modes.shinkansen, hours: road / 175 + 0.6, cost: road * 30, km: dist};
 }
 
 // ---------- Wikipedia から行き先を組み立てる(登録外の行き先用) ----------
-const WIKI = 'https://ja.wikipedia.org/w/api.php?action=query&format=json&origin=*';
-const SKIP = /(駅|学校|大学|病院|郵便局|線$|道路|交差点|役所|役場|インターチェンジ|ジャンクション|団地|高速|国道|号線|事件|株式会社|銀行|公民館|消防|警察|変電|発電|工場|ビル$|マンション|センター$|停留所|空港$|港$|放送|新聞|ホテル)/;
-const CLASS = [
+// 言語ごとの記事名の判定。英語版で記事が足りない町は日本語版 Wikipedia に切り替える
+const WIKI = {en: {skip: /(Station|School|University|College|Hospital|Post Office|Line$|Road|Route|Expressway|Interchange|Junction|Office|City Hall|Town Hall|Incident|Bank|Company|Corporation|Factory|Building|Apartment|Center$|Centre$|Airport|Port$|Harbor|Broadcast|Newspaper|Hotel|District$|Prefecture|Dam$|Power)/, cls: [
+  [/(Shrine|Jinja|Jingu|Taisha|Temple|-ji\b|-in\b|Cathedral|Church|Hachiman|Inari|Tenmangu|-gu\b)/i, '寺社', 1],
+  [/(Castle|Ruins|Residence|House$|Jinya|Kofun|Tumulus|Site$|Juku|Barrier|Samurai)/i, '歴史', 1],
+  [/(Art Museum|Museum of Art|Gallery|\bArt\b)/i, '美術館', 1.5],
+  [/(Museum|Memorial|Aquarium|Zoo|Science|Planetarium|Folk Village)/i, '博物館', 1.5],
+  [/(Onsen|Hot Spring|\bSpa\b)/i, '温泉', 1.5],
+  [/(Market|Yokocho|Shopping Street|Brewery|Distillery|Winery|Farm|Michi-no-eki)/i, 'グルメ', 1],
+  [/(Garden|Park|Mount\b|Mt\.|Mountain|-yama\b|-dake\b|Falls|Waterfall|Gorge|Valley|Lake|Pond|Cape|Beach|Coast|Island|Plateau|Marsh|Wetland|Forest|River)/i, '自然', 1.5],
+  [/(Cave|Rice Terraces|Pass$|Observatory|Lookout|\bSki\b|Botanical)/i, '絶景', 1.5],
+  [/(Kannon|Fudo|Jizo|Daishi|Buddha)/i, '寺社', 0.75],
+  [/(Street|Townscape|Old Town|Highway|Kaido|Tower|Lighthouse|Preservation)/i, '街歩き', 1]
+]}, ja: {skip: /(駅|学校|大学|病院|郵便局|線$|道路|交差点|役所|役場|インターチェンジ|ジャンクション|団地|高速|国道|号線|事件|株式会社|銀行|公民館|消防|警察|変電|発電|工場|ビル$|マンション|センター$|停留所|空港$|港$|放送|新聞|ホテル)/, cls: [
   [/(神社|神宮|大社|寺|院$|八幡|稲荷|天満宮|御嶽|教会|天主堂)/, '寺社', 1],
   [/(城|跡$|屋敷|陣屋|古墳|遺跡|宿場|番所)/, '歴史', 1],
   [/(美術館|ギャラリー)/, '美術館', 1.5],
@@ -2394,9 +2526,9 @@ const CLASS = [
   [/(鍾乳洞|洞窟|棚田|ダム$|峠$|展望台|海水浴場|キャンプ場|スキー場|植物園|自然公園)/, '絶景', 1.5],
   [/(観音|不動|地蔵|大師)/, '寺社', 0.75],
   [/(通り$|町並み|街並み|街道|坂$|橋$|タワー|灯台|古民家|宿場町)/, '街歩き', 1]
-];
-async function wikiGet(params) {
-  const r = await fetch(WIKI + params);
+]}};
+async function wikiGet(params, lang = T.wikiLang) {
+  const r = await fetch(`https://${lang}.wikipedia.org/w/api.php?action=query&format=json&origin=*` + params);
   if (!r.ok) throw new Error('wiki');
   return r.json();
 }
@@ -2406,59 +2538,60 @@ async function wikiCoords(q) {
   if (!p?.coordinates) return null;
   return {name: q, lat: p.coordinates[0].lat, lng: p.coordinates[0].lon};
 }
-async function wikiDest(q, muni) {
+async function wikiDest(q, muni, lang = T.wikiLang) {
   const c = muni || await wikiCoords(q);
   if (!c) return null;
   const pages = new Map();
   const grab = async pt => {
-    const j = await wikiGet(`&generator=geosearch&ggscoord=${pt.lat}|${pt.lng}&ggsradius=10000&ggslimit=50&prop=pageviews|coordinates&colimit=max&pvipdays=30`);
+    const j = await wikiGet(`&generator=geosearch&ggscoord=${pt.lat}|${pt.lng}&ggsradius=10000&ggslimit=50&prop=pageviews|coordinates&colimit=max&pvipdays=30`, lang);
     Object.values(j.query?.pages || {}).forEach(p => pages.set(p.pageid, p));
   };
   await grab(c);
-  let spots = collectSpots([...pages.values()]);
+  let spots = collectSpots([...pages.values()], lang);
   // 小さな町は見どころが少ないので、となりの市町村まで範囲を広げる
   if (muni && spots.length < 14) {
     const near = MUNIS.filter(x => x !== muni && !x.code.includes('P')).map(x => [km(muni, x), x]).filter(([d]) => d > 4 && d < 22).sort((a, b) => a[0] - b[0]);
-    for (const [, n] of near.slice(0, 3)) { await grab(n); spots = collectSpots([...pages.values()]); if (spots.length >= 14) break; }
+    for (const [, n] of near.slice(0, 3)) { await grab(n); spots = collectSpots([...pages.values()], lang); if (spots.length >= 14) break; }
   }
   if (spots.length < 4) return null;
   spots.sort((a, b) => b.views - a.views);
   spots = spots.slice(0, 50);
   const cut = Math.max(2, Math.round(spots.length * 0.35));
   spots.forEach((s, i) => { s.kind = i < cut ? 'f' : 'h'; });
-  await addExtracts(spots);
+  await addExtracts(spots, lang);
   spots.sort((a, b) => (b.lat - a.lat) || (a.lng - b.lng));
-  const name = muni ? muni.name : q;
-  const where = muni ? `${muni.pref}${muni.gun}${muni.name}` : q;
-  return {id: 'wiki:' + (muni ? muni.code : q), name, pref: muni?.pref || '', aliases: [name], lat: c.lat, lng: c.lng, wiki: true,
-    lead: `${where}とその周辺の見どころを、Wikipediaの閲覧数をもとに「定番」と「穴場」に分けて組み立てました。`,
-    stay: `${name}の中心部や主要駅の近くに泊まると動きやすいです。`, foods: [], spots};
+  const name = muni ? muniName(muni) : q;
+  const where = muni ? (isEn ? `${muni.en}, ${prefEnFull(muni.pref)}` : `${muni.pref}${muni.gun}${muni.name}`) : q;
+  return {id: 'wiki:' + (muni ? muni.code : q), name, nameJa: muni ? muni.name : q, pref: muni?.pref || '', aliases: [name], lat: c.lat, lng: c.lng, wiki: true,
+    lead: T.wikiLead(where), stay: T.wikiStay(name), foods: [], spots};
 }
-async function addExtracts(spots) {
+async function addExtracts(spots, lang) {
   for (let i = 0; i < spots.length; i += 20) {
     const batch = spots.slice(i, i + 20);
     try {
-      const j = await wikiGet(`&prop=extracts&exintro=1&explaintext=1&exsentences=1&exlimit=20&pageids=${batch.map(s => s.pageid).join('|')}`);
+      const j = await wikiGet(`&prop=extracts&exintro=1&explaintext=1&exsentences=1&exlimit=20&pageids=${batch.map(s => s.pageid).join('|')}`, lang);
       const pages = j.query?.pages || {};
       batch.forEach(s => {
-        let t = (pages[s.pageid]?.extract || '').replace(/[((][^))]*[))]/g, '').replace(/\s+/g, ' ').trim();
-        if (t) s.tip = t.length > 80 ? t.slice(0, 78) + '…' : t;
+        let t = (pages[s.pageid]?.extract || '').replace(/[((][^))]*[))]/g, '').replace(/\s+/g, ' ').replace(/ ([,.])/g, '$1').trim();
+        const max = lang === 'en' ? 180 : 80;
+        if (t) s.tip = t.length > max ? t.slice(0, max - 2) + '…' : t;
       });
     } catch {}
   }
 }
-function collectSpots(pages) {
+function collectSpots(pages, lang) {
+  const {skip, cls} = WIKI[lang];
   const spots = [];
   for (const p of pages) {
     const t = p.title;
-    if (SKIP.test(t) || !p.coordinates) continue;
-    const cl = CLASS.find(([re]) => re.test(t));
+    if (skip.test(t) || !p.coordinates) continue;
+    const cl = cls.find(([re]) => re.test(t));
     if (!cl) continue;
     const views = Object.values(p.pageviews || {}).reduce((s, v) => s + (v || 0), 0);
     const lat = p.coordinates[0].lat, lng = p.coordinates[0].lon;
     spots.push({name: t, cat: cl[1], hours: cl[2], indoor: ['美術館', '博物館', '温泉'].includes(cl[1]), cost: 0, views, lat, lng,
       area: `${Math.round(lat / 0.025)}_${Math.round(lng / 0.025)}`,
-      pageid: p.pageid, tip: '詳しくはWikipediaの記事で', wiki: 'https://ja.wikipedia.org/wiki/' + encodeURIComponent(t)});
+      pageid: p.pageid, tip: T.wikiTipDefault, wiki: `https://${lang}.wikipedia.org/wiki/` + encodeURIComponent(t.replace(/ /g, '_'))});
   }
   return spots;
 }
@@ -2552,36 +2685,36 @@ function schedule(state, plan, d) {
   const nDays = params.nights + 1;
   const day = plan.days[d];
   const {start} = dayWindow(params, tr, d, nDays);
-  const foods = dest.foods.length ? dest.foods : ['地元の食堂'];
+  const foods = dest.foods.length ? dest.foods : [T.defaultFood];
   const food = k => foods[(d * 2 + k + plan.variant) % foods.length];
   const items = [];
   if (d === 0 && tr.hours > 0) {
-    items.push({t: P.depart, type: 'move', title: `${from.name}を出発`, sub: `${tr.label}で約${fmtH(tr.hours)}(乗り換え・待ち時間込みの目安)`});
-    items.push({t: P.depart + tr.hours, type: 'move', title: `${dest.name}に到着`, sub: '大きな荷物はホテルかコインロッカーに預けて身軽に'});
+    items.push({t: P.depart, type: 'move', title: T.depart(from.name), sub: T.departSub(tr.label, fmtH(tr.hours))});
+    items.push({t: P.depart + tr.hours, type: 'move', title: T.arrive(dest.name), sub: T.arriveSub});
   }
   let t = start, lunch = false;
   day.spots.forEach((s, i) => {
     if (i > 0) t += P.gap;
-    if (!lunch && t >= 11.5 && t < 14.5) { items.push({t, type: 'meal', title: `昼ごはん:${food(0)}`, sub: '人気店は11時台か13時半以降が入りやすい'}); t += 1; lunch = true; t += 0.15; }
+    if (!lunch && t >= 11.5 && t < 14.5) { items.push({t, type: 'meal', title: T.lunch(food(0)), sub: T.lunchSub}); t += 1; lunch = true; t += 0.15; }
     items.push({t, type: 'spot', s, i});
     t += s.hours;
   });
   if (!day.spots.length) {
-    items.push({t, type: 'meal', title: '自由時間', sub: '気に入った場所をもう一度訪ねたり、カフェや宿でのんびり。「スポットを1つ足す」で予定を足せます'});
+    items.push({t, type: 'meal', title: T.free, sub: T.freeSub});
     t += d === nDays - 1 && tr.hours > 0 ? Math.max(0.5, 11 - t) : 2;
   }
-  if (!lunch && t >= 11.5 && t < 14.5 && start < 14) { items.push({t: t + 0.2, type: 'meal', title: `昼ごはん:${food(0)}`}); t += 1.2; }
+  if (!lunch && t >= 11.5 && t < 14.5 && start < 14) { items.push({t: t + 0.2, type: 'meal', title: T.lunch(food(0))}); t += 1.2; }
   const last = d === nDays - 1;
   if (last && tr.hours > 0) {
     const leave = Math.max(t + 0.5, start + 0.5);
-    items.push({t: leave - 0.4, type: 'meal', title: 'おみやげ選び', sub: dest.gift ? `${dest.gift}が定番です` : '駅や空港のおみやげ売り場で'});
-    items.push({t: leave, type: 'move', title: `${dest.name}を出発`, sub: `${tr.label}で約${fmtH(tr.hours)}`});
-    items.push({t: leave + tr.hours, type: 'move', title: `${from.name}に到着`, sub: 'おつかれさまでした'});
+    items.push({t: leave - 0.4, type: 'meal', title: T.gifts, sub: T.giftsSub(dest.gift)});
+    items.push({t: leave, type: 'move', title: T.leave(dest.name), sub: T.leaveSub(tr.label, fmtH(tr.hours))});
+    items.push({t: leave + tr.hours, type: 'move', title: T.home(from.name), sub: T.homeSub});
   } else {
     const dinner = Math.max(t + 0.5, 18);
-    items.push({t: dinner, type: 'meal', title: `夜ごはん:${food(1)}`});
+    items.push({t: dinner, type: 'meal', title: T.dinner(food(1))});
     if (day.night) items.push({t: dinner + 1.3, type: 'spot', s: day.night, i: -1});
-    if (!last) items.push({t: day.night ? dinner + 1.3 + day.night.hours + 0.4 : dinner + 1.5, type: 'stay', title: `${dest.name}泊(${d + 1}泊目)`, sub: dest.stay});
+    if (!last) items.push({t: day.night ? dinner + 1.3 + day.night.hours + 0.4 : dinner + 1.5, type: 'stay', title: T.stay(dest.name, d + 1), sub: dest.stay});
   }
   return items;
 }
@@ -2604,7 +2737,7 @@ function writeParams(p) {
   for (const k of ['from', 'to']) {
     const el = $('#' + k);
     if (p[k] != null) el.value = p[k];
-    if (p[k + 'Code'] && muniByCode.has(p[k + 'Code'])) el.dataset.code = p[k + 'Code']; else delete el.dataset.code;
+    if (p[k + 'Code'] && muniByCode.has(p[k + 'Code'])) { el.dataset.code = p[k + 'Code']; if (isEn) el.value = muniName(muniByCode.get(p[k + 'Code'])); } else delete el.dataset.code;
     el.showPicked?.();
   }
   if (p.date) $('#date').value = p.date;
@@ -2627,15 +2760,14 @@ function budgetOf(st, plan) {
   const meal = nDays * B.meal;
   const fees = plan.days.flatMap(d => [...d.spots, ...(d.night ? [d.night] : [])]).reduce((s, x) => s + (x.cost || 0), 0);
   const local = okinawaCar ? nDays * 7000 / Math.min(params.people, 4) : nDays * 1000;
-  return {move, stay, meal, fees, local, total: move + stay + meal + fees + local, localLabel: okinawaCar ? 'レンタカー(割り勘)' : '現地の交通'};
+  return {move, stay, meal, fees, local, total: move + stay + meal + fees + local, localLabel: okinawaCar ? T.rentalShare : T.localTransport};
 }
 
-const WX = {0: '快晴', 1: '晴れ', 2: '晴れ時々くもり', 3: 'くもり', 45: '霧', 48: '霧', 51: '霧雨', 53: '霧雨', 55: '霧雨', 61: '小雨', 63: '雨', 65: '大雨', 66: 'みぞれ', 67: 'みぞれ', 71: '小雪', 73: '雪', 75: '大雪', 77: '雪', 80: 'にわか雨', 81: 'にわか雨', 82: '強いにわか雨', 85: 'にわか雪', 86: 'にわか雪', 95: '雷雨', 96: '雷雨', 99: '雷雨'};
+const WX = T.wx;
 function addDays(iso, n) { const d = new Date(iso + 'T00:00:00'); d.setDate(d.getDate() + n); return d; }
 function dayLabel(iso, n) {
   if (!iso) return '';
-  const d = addDays(iso, n);
-  return `${d.getMonth() + 1}/${d.getDate()}(${'日月火水木金土'[d.getDay()]})`;
+  return T.dayLabel(addDays(iso, n));
 }
 function isoOf(d) { return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; }
 
@@ -2662,54 +2794,59 @@ function renderWeather() {
   const el = $('#wxFact');
   if (!el || !state) return;
   const {params} = state;
-  if (!weather) { el.innerHTML = `<div class="k">現地の天気</div><div class="v">取得中…</div>`; return; }
-  if (weather.out) { el.innerHTML = `<div class="k">現地の天気</div><div class="v">—</div><div class="s">予報は出発の約2週間前から表示します</div>`; return; }
-  if (weather.failed) { el.innerHTML = `<div class="k">現地の天気</div><div class="v">—</div><div class="s">いまは天気予報を取得できませんでした</div>`; return; }
+  if (!weather) { el.innerHTML = `<div class="k">${T.wxTitle}</div><div class="v">${T.wxLoading}</div>`; return; }
+  if (weather.out) { el.innerHTML = `<div class="k">${T.wxTitle}</div><div class="v">—</div><div class="s">${T.wxOut}</div>`; return; }
+  if (weather.failed) { el.innerHTML = `<div class="k">${T.wxTitle}</div><div class="v">—</div><div class="s">${T.wxFailed}</div>`; return; }
   let rainy = 0, shown = 0, first = null;
   for (let n = 0; n <= params.nights; n++) {
     const w = weather.map[isoOf(addDays(params.date, n))];
     const slot = document.querySelector(`[data-wx="${n}"]`);
     if (!w) continue;
     shown++; if (w.pop >= 50) rainy++; if (!first) first = w;
-    if (slot) slot.innerHTML = `<b>${WX[w.code] || '—'}</b> ${Math.round(w.max)}° / ${Math.round(w.min)}° ・降水 ${w.pop ?? '—'}%`;
+    if (slot) slot.innerHTML = T.wxDay(WX[w.code] || '—', Math.round(w.max), Math.round(w.min), w.pop ?? '—');
   }
-  if (!first) { el.innerHTML = `<div class="k">現地の天気</div><div class="v">—</div><div class="s">予報の範囲外です</div>`; return; }
-  el.innerHTML = `<div class="k">現地の天気(初日)</div><div class="v">${WX[first.code] || '—'} ${Math.round(first.max)}°</div>
-    <div class="s">${rainy ? `雨の可能性が高い日が${rainy}日あります` : '大きな崩れはなさそうです'}</div>
-    ${rainy && !params.rain ? '<button class="btn" type="button" id="toRain" style="margin-top:6px">雨の日モードで作り直す</button>' : ''}`;
+  if (!first) { el.innerHTML = `<div class="k">${T.wxTitle}</div><div class="v">—</div><div class="s">${T.wxRange}</div>`; return; }
+  el.innerHTML = `<div class="k">${T.wxTitleFirst}</div><div class="v">${WX[first.code] || '—'} ${Math.round(first.max)}°</div>
+    <div class="s">${rainy ? T.wxRainy(rainy) : T.wxFine}</div>
+    ${rainy && !params.rain ? `<button class="btn" type="button" id="toRain" style="margin-top:6px">${T.wxRedo}</button>` : ''}`;
   $('#toRain')?.addEventListener('click', () => { $('#rain').checked = true; generate(); });
 }
 
 function packingList(st) {
   const {params, dest} = st;
   const m = params.date ? addDays(params.date, 0).getMonth() + 1 : new Date().getMonth() + 1;
-  const list = ['財布・身分証・交通系ICカード', 'スマホの充電器とモバイルバッテリー', '歩きやすい靴', '常備薬'];
-  if (params.nights > 0) list.push(`着替え(${params.nights}泊分)`, '洗面用具・スキンケア');
-  if ([12, 1, 2].includes(m)) list.push(dest.lat > 40 ? 'しっかりした防寒着・滑りにくい靴' : 'コート・手袋');
-  else if ([6, 7, 8, 9].includes(m)) list.push('日焼け止め・帽子', '汗ふきシート');
-  else list.push('羽織れる上着');
-  if (params.rain || [6, 7].includes(m)) list.push('折りたたみ傘');
-  if (dest.id === 'okinawa' && m >= 4 && m <= 10) list.push('水着・ラッシュガード');
+  const K = T.pack;
+  const list = [...K.base];
+  if (params.nights > 0) list.push(K.clothes(params.nights), K.toiletries);
+  if ([12, 1, 2].includes(m)) list.push(dest.lat > 40 ? K.coldNorth : K.cold);
+  else if ([6, 7, 8, 9].includes(m)) list.push(...K.sun);
+  else list.push(K.mild);
+  if (params.rain || [6, 7].includes(m)) list.push(K.umbrella);
+  if (dest.id === 'okinawa' && m >= 4 && m <= 10) list.push(K.swim);
   const plan = st.plans[st.active];
-  if (plan.days.some(d => d.spots.some(s => s.cat === '温泉'))) list.push('温泉用の小さいタオル');
-  if (plan.days.some(d => d.spots.some(s => s.cat === '寺社'))) list.push('御朱印帳(集めている人は)');
-  if (dest.id === 'okinawa') list.push('運転免許証(レンタカー用)');
-  list.push('エコバッグ(おみやげ用)');
+  if (plan.days.some(d => d.spots.some(s => s.cat === '温泉'))) list.push(K.towel);
+  if (plan.days.some(d => d.spots.some(s => s.cat === '寺社'))) list.push(K.goshuin);
+  if (dest.id === 'okinawa') list.push(K.license);
+  list.push(K.bag);
   return list;
 }
 
 function mapsLink(s, dest) {
-  const q = s.lat ? `${s.lat},${s.lng}` : `${s.name} ${dest.wiki ? '' : dest.name}`;
+  const q = s.lat ? `${s.lat},${s.lng}` : `${s.name} ${dest.wiki ? '' : dest.name}${isEn ? ' Japan' : ''}`;
   return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}`;
 }
 function routeLink(day, dest) {
-  const pts = day.spots.map(s => s.lat ? `${s.lat},${s.lng}` : `${s.name} ${dest.wiki ? '' : dest.name}`);
+  const pts = day.spots.map(s => s.lat ? `${s.lat},${s.lng}` : `${s.name} ${dest.wiki ? '' : dest.name}${isEn ? ' Japan' : ''}`);
   if (pts.length < 2) return null;
   const [o, ...rest] = pts; const dst = rest.pop();
   return `https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(o)}&destination=${encodeURIComponent(dst)}${rest.length ? '&waypoints=' + encodeURIComponent(rest.join('|')) : ''}&travelmode=transit`;
 }
 
-const hotelKeyword = dest => dest.wiki && dest.pref ? dest.pref + dest.name : dest.name;
+const hotelKeyword = dest => isEn
+  ? {en: [dest.name, dest.pref ? prefEn(dest.pref) : '', 'Japan'].filter(Boolean).join(', '), ja: dest.wiki ? dest.pref + (dest.nameJa || '') : dest.nameJa}
+  : (dest.wiki && dest.pref ? dest.pref + dest.name : dest.name);
+const hotelProviders = isEn ? HOTEL_PROVIDERS_EN : HOTEL_PROVIDERS;
+const carProviders = isEn ? CAR_PROVIDERS_EN : CAR_PROVIDERS;
 const needsCar = dest => dest.id === 'okinawa' || !!dest.wiki;
 const prLinks = (providers, arg, cls = '') => providers.map(p => `<a class="${cls}" href="${esc(p.url(arg))}" target="_blank" rel="noopener sponsored">${esc(p.label)}</a>`).join('');
 
@@ -2719,13 +2856,13 @@ function render() {
   const nDays = params.nights + 1;
   const b = budgetOf(st, plan);
   const pp = b.total;
-  const durLabel = params.nights ? `${params.nights}泊${nDays}日` : '日帰り';
+  const durLabel = T.dur(params.nights);
   const tabs = st.plans.map((p, i) => {
     const hr = hiddenRatio(p);
     return `<button type="button" class="tab" role="tab" aria-selected="${i === st.active}" data-tab="${i}">
       <b>${VARIANTS[i].label}</b><small>${VARIANTS[i].desc}</small>
-      <span class="meter" aria-label="穴場率${Math.round(hr * 100)}%"><i style="width:${Math.round(hr * 100)}%;margin-left:auto"></i></span>
-      <small>定番 ${100 - Math.round(hr * 100)}% ・ 穴場 ${Math.round(hr * 100)}%</small></button>`;
+      <span class="meter" aria-label="${T.hiddenRate(Math.round(hr * 100))}"><i style="width:${Math.round(hr * 100)}%;margin-left:auto"></i></span>
+      <small>${T.ratio(100 - Math.round(hr * 100), Math.round(hr * 100))}</small></button>`;
   }).join('');
 
   const days = plan.days.map((day, d) => {
@@ -2733,22 +2870,22 @@ function render() {
     const lis = items.map(it => {
       if (it.type === 'spot') {
         const s = it.s;
-        const badge = s.kind === 'h' ? '<span class="stamp">穴場</span>' : '<span class="tag-f">定番</span>';
+        const badge = s.kind === 'h' ? `<span class="stamp">${T.stamp}</span>` : `<span class="tag-f">${T.classic}</span>`;
         return `<li class="spot ${s.kind}"><time>${fmtT(it.t)}</time><span class="dot"></span><div class="ev"><div class="spotcard">
           <div class="ttl">${badge}<span class="name">${esc(s.name)}</span></div>
-          <div class="meta"><span>${esc(s.cat)}</span><span>滞在 約${fmtH(s.hours)}</span>${s.cost ? `<span>${yen(s.cost)}〜</span>` : '<span>無料〜</span>'}${s.indoor ? '<span class="rain">雨でもOK</span>' : ''}${s.area && !dest.wiki ? `<span>${esc(s.area)}エリア</span>` : ''}</div>
+          <div class="meta"><span>${esc(catLabel(s.cat))}</span><span>${T.stayAbout(fmtH(s.hours))}</span>${s.cost ? `<span>${T.fromYen(yen(s.cost))}</span>` : `<span>${T.free0}</span>`}${s.indoor ? `<span class="rain">${T.rainOk}</span>` : ''}${s.area && !dest.wiki ? `<span>${esc(T.areaLabel(s.area))}</span>` : ''}</div>
           <p>${esc(s.tip)}</p>
-          <div class="sacts"><a href="${mapsLink(s, dest)}" target="_blank" rel="noopener">地図</a>${s.wiki ? `<a href="${s.wiki}" target="_blank" rel="noopener">Wikipedia</a>` : ''}
-          <button type="button" data-swap="${d}:${it.i}">ほかの場所にする</button><button type="button" data-del="${d}:${it.i}">外す</button></div>
+          <div class="sacts"><a href="${mapsLink(s, dest)}" target="_blank" rel="noopener">${T.map}</a>${s.wiki ? `<a href="${s.wiki}" target="_blank" rel="noopener">Wikipedia</a>` : ''}
+          <button type="button" data-swap="${d}:${it.i}">${T.swap}</button><button type="button" data-del="${d}:${it.i}">${T.remove}</button></div>
         </div></div></li>`;
       }
-      const book = it.type === 'stay' ? `<div class="sacts"><span class="pr">PR</span>${prLinks(HOTEL_PROVIDERS, hotelKeyword(dest))}</div>` : '';
+      const book = it.type === 'stay' ? `<div class="sacts"><span class="pr">PR</span>${prLinks(hotelProviders, hotelKeyword(dest))}</div>` : '';
       return `<li class="${it.type}"><time>${fmtT(it.t)}</time><span class="dot"></span><div class="ev"><div class="t">${esc(it.title)}</div>${it.sub ? `<div class="sub">${esc(it.sub)}</div>` : ''}${book}</div></li>`;
     }).join('');
     const rl = routeLink(day, dest);
-    return `<article class="day"><div class="day-h"><h3><span class="no">${d + 1}日目</span>${dayLabel(params.date, d)}</h3><span class="wx" data-wx="${d}"></span></div>
+    return `<article class="day"><div class="day-h"><h3><span class="no">${T.dayNo(d + 1)}</span>${dayLabel(params.date, d)}</h3><span class="wx" data-wx="${d}"></span></div>
       <ol class="tl">${lis}</ol>
-      <div class="day-f"><button type="button" class="btn" data-add="${d}">スポットを1つ足す</button>${rl ? `<a class="btn" href="${rl}" target="_blank" rel="noopener">この日のルートを地図で見る</a>` : ''}</div></article>`;
+      <div class="day-f"><button type="button" class="btn" data-add="${d}">${T.addSpot}</button>${rl ? `<a class="btn" href="${rl}" target="_blank" rel="noopener">${T.route}</a>` : ''}</div></article>`;
   }).join('');
 
   const pack = packingList(st);
@@ -2758,40 +2895,40 @@ function render() {
   $('#result').innerHTML = `
     <div class="dest-head">
       <div class="route">${esc(from.name)} → ${esc(dest.name)}</div>
-      <h2 class="plan-title">${esc(dest.name)} ${durLabel}<small>${PACE[params.pace].label}・${params.people}人</small></h2>
+      <h2 class="plan-title">${esc(dest.name)} ${durLabel}<small>${PACE[params.pace].label}${isEn ? ' · ' : '・'}${T.people(params.people)}</small></h2>
       <p class="lead">${esc(dest.lead)}</p>
     </div>
     ${st.notice ? `<div class="notice">${st.notice}</div>` : ''}
     ${dest.note ? `<div class="notice">${esc(dest.note)}</div>` : ''}
     <div class="facts">
-      <div class="fact"><div class="k">移動(片道の目安)</div><div class="v">${tr.hours ? `${tr.label} 約${fmtH(tr.hours)}` : '現地出発'}</div><div class="s">${tr.hours ? `直線で約${Math.round(tr.km)}km・${yen(tr.cost)}前後` : '移動時間なしで組みました'}</div></div>
-      <div class="fact"><div class="k">予算(1人あたり)</div><div class="v">${yen(pp)}</div>
-        <details><summary>内訳を見る</summary><dl>
-        <dt>往復の交通費</dt><dd>${yen(b.move)}</dd><dt>宿泊(${params.nights}泊)</dt><dd>${yen(b.stay)}</dd>
-        <dt>食事</dt><dd>${yen(b.meal)}</dd><dt>拝観・入場料</dt><dd>${yen(b.fees)}</dd><dt>${b.localLabel}</dt><dd>${yen(b.local)}</dd>
-        <dt><b>${params.people}人の合計</b></dt><dd><b>${yen(pp * params.people)}</b></dd></dl></details></div>
+      <div class="fact"><div class="k">${T.trTitle}</div><div class="v">${tr.hours ? T.trValue(tr.label, fmtH(tr.hours)) : T.trLocal}</div><div class="s">${tr.hours ? T.trSub(Math.round(tr.km), yen(tr.cost)) : T.trLocalSub}</div></div>
+      <div class="fact"><div class="k">${T.budget}</div><div class="v">${yen(pp)}</div>
+        <details><summary>${T.breakdown}</summary><dl>
+        <dt>${T.bMove}</dt><dd>${yen(b.move)}</dd><dt>${T.bStay(params.nights)}</dt><dd>${yen(b.stay)}</dd>
+        <dt>${T.bMeal}</dt><dd>${yen(b.meal)}</dd><dt>${T.bFees}</dt><dd>${yen(b.fees)}</dd><dt>${b.localLabel}</dt><dd>${yen(b.local)}</dd>
+        <dt><b>${T.bTotal(T.people(params.people))}</b></dt><dd><b>${yen(pp * params.people)}</b></dd></dl></details></div>
       <div class="fact" id="wxFact"></div>
     </div>
-    <div class="tabs" role="tablist" aria-label="プランの種類">${tabs}</div>
+    <div class="tabs" role="tablist" aria-label="${T.planTypes}">${tabs}</div>
     <div class="toolbar">
-      <button type="button" class="btn" id="shuffle">別の組み合わせにする</button>
-      <button type="button" class="btn" id="save">このプランを保存</button>
-      <button type="button" class="btn" id="copyText">テキストでコピー</button>
-      ${/^https?:/.test(location.protocol) ? '<button type="button" class="btn" id="copyLink">共有リンクをコピー</button>' : ''}
+      <button type="button" class="btn" id="shuffle">${T.shuffle}</button>
+      <button type="button" class="btn" id="save">${T.save}</button>
+      <button type="button" class="btn" id="copyText">${T.copyText}</button>
+      ${/^https?:/.test(location.protocol) ? `<button type="button" class="btn" id="copyLink">${T.copyLink}</button>` : ''}
       <span class="toast" id="toast" role="status"></span>
     </div>
-    <div class="legendrow"><span class="tag-f">定番</span>有名な観光地 <span class="stamp">穴場</span>知る人ぞ知る場所 <span class="rain" style="color:var(--matcha);font-weight:700">雨でもOK</span>屋内で楽しめる</div>
+    <div class="legendrow">${T.legend}</div>
     ${days}
     <div class="book">
-      <div class="book-h"><h4>${esc(dest.name)}の宿をさがす</h4><span class="pr">PR</span></div>
+      <div class="book-h"><h4>${esc(T.bookTitle(dest.name))}</h4><span class="pr">PR</span></div>
       <p>${esc(dest.stay)}</p>
-      <div class="book-links">${prLinks(HOTEL_PROVIDERS, hotelKeyword(dest), 'btn-book')}${needsCar(dest) ? prLinks(CAR_PROVIDERS, null, 'btn-book alt') : ''}</div>
-      ${needsCar(dest) ? '<p class="hint" style="margin:0">見どころが離れているので、レンタカーがあると回りやすい行き先です。</p>' : ''}
+      <div class="book-links">${prLinks(hotelProviders, hotelKeyword(dest), 'btn-book')}${needsCar(dest) ? prLinks(carProviders, null, 'btn-book alt') : ''}</div>
+      ${needsCar(dest) ? `<p class="hint" style="margin:0">${T.carHint}</p>` : ''}
     </div>
     <div class="extras">
-      <div class="box"><h4>${esc(dest.name)}で食べたいもの</h4>${dest.foods.length ? `<ul>${dest.foods.map(f => `<li>${esc(f)}</li>`).join('')}</ul>` : '<p class="hint" style="margin:0">地元の人が並ぶ店や、道の駅の食堂を探してみてください。</p>'}</div>
-      <div class="box"><h4>持ち物チェックリスト</h4><ul class="pack">${pack.map((p, i) => `<li><label><input type="checkbox" id="pk${i}" data-pack="${esc(p)}" ${checked[p] ? 'checked' : ''}><span>${esc(p)}</span></label></li>`).join('')}</ul></div>
-      <div class="box" style="grid-column:1/-1"><h4>保存したプラン</h4>${saved.length ? `<ul class="saved">${saved.map((s, i) => `<li><span>${esc(s.title)}</span><span style="display:flex;gap:6px;flex:none"><button type="button" class="btn" data-open="${i}">開く</button><button type="button" class="btn" data-rm="${i}">削除</button></span></li>`).join('')}</ul>` : '<p class="hint" style="margin:0">「このプランを保存」を押すと、このブラウザに保存されて後から開けます。</p>'}</div>
+      <div class="box"><h4>${esc(T.eatTitle(dest.name))}</h4>${dest.foods.length ? `<ul>${dest.foods.map(f => `<li>${esc(f)}</li>`).join('')}</ul>` : `<p class="hint" style="margin:0">${T.eatNone}</p>`}</div>
+      <div class="box"><h4>${T.packTitle}</h4><ul class="pack">${pack.map((p, i) => `<li><label><input type="checkbox" id="pk${i}" data-pack="${esc(p)}" ${checked[p] ? 'checked' : ''}><span>${esc(p)}</span></label></li>`).join('')}</ul></div>
+      <div class="box" style="grid-column:1/-1"><h4>${T.savedTitle}</h4>${saved.length ? `<ul class="saved">${saved.map((s, i) => `<li><span>${esc(s.title)}</span><span style="display:flex;gap:6px;flex:none"><button type="button" class="btn" data-open="${i}">${T.open}</button><button type="button" class="btn" data-rm="${i}">${T.del}</button></span></li>`).join('')}</ul>` : `<p class="hint" style="margin:0">${T.savedNone}</p>`}</div>
     </div>`;
   renderWeather();
 }
@@ -2804,14 +2941,14 @@ function toast(msg) {
 function planText() {
   const {params, dest, from} = state;
   const plan = state.plans[state.active];
-  const lines = [`【${dest.name} ${params.nights ? params.nights + '泊' + (params.nights + 1) + '日' : '日帰り'}】${VARIANTS[plan.variant].label}(${from.name}発)`];
+  const lines = [T.textHead(dest.name, T.dur(params.nights), VARIANTS[plan.variant].label, from.name)];
   plan.days.forEach((_, d) => {
-    lines.push('', `■ ${d + 1}日目 ${dayLabel(params.date, d)}`);
+    lines.push('', T.textDay(d + 1, dayLabel(params.date, d)));
     schedule(state, plan, d).forEach(it => {
-      lines.push(`${fmtT(it.t).padStart(5)} ${it.type === 'spot' ? (it.s.kind === 'h' ? '[穴場] ' : '[定番] ') + it.s.name : it.title}`);
+      lines.push(`${fmtT(it.t).padStart(5)} ${it.type === 'spot' ? `[${it.s.kind === 'h' ? T.hidden : T.classic}] ` + it.s.name : it.title}`);
     });
   });
-  lines.push('', 'たびしおりで作成');
+  lines.push('', T.textFooter);
   return lines.join('\n');
 }
 async function copy(text, ok) {
@@ -2819,7 +2956,7 @@ async function copy(text, ok) {
   catch {
     const ta = document.createElement('textarea'); ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
     document.body.appendChild(ta); ta.select();
-    try { document.execCommand('copy'); toast(ok); } catch { toast('コピーできませんでした'); }
+    try { document.execCommand('copy'); toast(ok); } catch { toast(T.copyFail); }
     ta.remove();
   }
 }
@@ -2832,7 +2969,7 @@ function swapSpot(d, i) {
   const order = areaOrder(state.dest);
   const R = rng(newSeed());
   const cands = state.dest.spots.filter(s => !used.has(s.name) && s.night === cur.night && s.hours <= cur.hours + 1);
-  if (!cands.length) { toast('入れ替えられる場所がもうありません'); return; }
+  if (!cands.length) { toast(T.noSwap); return; }
   const near = i > 0 ? day.spots[i - 1].area : cur.area;
   const scored = cands.map(s => {
     const diff = Math.abs(order.indexOf(s.area) - order.indexOf(near));
@@ -2851,14 +2988,14 @@ function addSpot(d) {
   const want = hiddenRatio(plan) > 1 - VARIANTS[plan.variant].famous ? 'f' : 'h';
   const R = rng(newSeed());
   const cands = state.dest.spots.filter(s => !used.has(s.name) && !s.night && s.hours <= 2.5);
-  if (!cands.length) { toast('追加できる場所がもうありません'); return; }
+  if (!cands.length) { toast(T.noAdd); return; }
   cands.sort((a, b) => {
     const f = s => (last ? -Math.abs(order.indexOf(s.area) - order.indexOf(last.area)) * 1.5 : 0) + (s.kind === want ? 2 : 0) + R();
     return f(b) - f(a);
   });
   day.spots.push(cands[0]);
   render();
-  toast(`${cands[0].name}を追加しました`);
+  toast(T.added(cands[0].name));
 }
 
 function paramsToQuery(p, seed) {
@@ -2875,29 +3012,32 @@ function queryToParams() {
 async function generate(seed) {
   const params = readParams();
   const res = $('#result');
-  if (!params.to) { res.innerHTML = '<div class="notice">行き先を入れてください。</div>'; return; }
+  if (!params.to) { res.innerHTML = `<div class="notice">${T.needTo}</div>`; return; }
   let notice = '';
   const toM = resolveMuni($('#to'));
   let dest = toM ? curatedFor(toM) : findDest(params.to);
   if (!dest) {
-    res.innerHTML = `<div class="loading">「${esc(toM ? muniLabel(toM) : params.to)}」の見どころを探しています…</div>`;
+    res.innerHTML = `<div class="loading">${T.searching(esc(toM ? muniLabel(toM) : params.to))}</div>`;
     let failed = false;
-    try { dest = await wikiDest(params.to, toM); } catch { dest = null; failed = true; }
+    try {
+      dest = await wikiDest(params.to, toM);
+      if (!dest && isEn && toM) { dest = await wikiDest(params.to, toM, 'ja'); if (dest) notice = T.jaWikiNotice + ' '; }
+    } catch { dest = null; failed = true; }
     if (!dest) {
       res.innerHTML = `<div class="notice">${failed
-        ? `いまは「${esc(params.to)}」の見どころを取りに行けませんでした。通信状況を確かめてもう一度お試しください。このプレビュー画面では外部への通信が止められているため、おすすめスポット登録済みの行き先だけ動きます。`
-        : `「${esc(params.to)}」の見どころが見つかりませんでした。候補から市区町村を選び直すか、近くの大きな町で試してください。`}
+        ? T.fetchFail(esc(params.to))
+        : T.notFound(esc(params.to))}
         <br><br>${DESTS.map(d => `<button type="button" class="btn" data-pick="${esc(d.name)}">${esc(d.name)}</button>`).join(' ')}</div>`;
       return;
     }
-    notice = 'この行き先はWikipediaの情報から自動で組み立てたプランです。所要時間や営業情報は特に注意して確認してください。';
+    notice += T.wikiNotice;
   }
   const fromM = resolveMuni($('#from'));
-  let from = fromM ? {name: fromM.name, lat: fromM.lat, lng: fromM.lng} : findPlace(params.from);
+  let from = fromM ? {name: muniName(fromM), lat: fromM.lat, lng: fromM.lng} : findPlace(params.from);
   if (!from && params.from) { try { from = await wikiCoords(params.from); } catch {} }
   if (!from) {
     from = {name: params.from || dest.name, lat: dest.lat, lng: dest.lng};
-    if (params.from) notice += (notice ? '<br>' : '') + `出発地「${esc(params.from)}」の場所がわからなかったため、移動時間を入れずに組みました。`;
+    if (params.from) notice += (notice ? '<br>' : '') + T.fromUnknown(esc(params.from));
   }
   const tr = transport(from, dest);
   seed = seed || newSeed();
@@ -2909,11 +3049,11 @@ async function generate(seed) {
 }
 
 function init() {
-  $('#nights').innerHTML = Array.from({length: 7}, (_, n) => `<option value="${n}">${n ? `${n}泊${n + 1}日` : '日帰り'}</option>`).join('');
+  $('#nights').innerHTML = Array.from({length: 7}, (_, n) => `<option value="${n}">${T.nightsOpt(n)}</option>`).join('');
   $('#nights').value = 2;
   $('#interests').innerHTML = INTERESTS.map(i => `<label><input type="checkbox" id="in-${i.id}" value="${i.id}"><span>${i.label}</span></label>`).join('');
   setupCombo($('#from')); setupCombo($('#to'));
-  $('#destHint').innerHTML = '全国の市区町村から検索できます(ひらがなもOK)。おすすめスポット登録済み:' + DESTS.map(d => `<button type="button" data-pick="${d.name}">${d.name}</button>`).join('・');
+  $('#destHint').innerHTML = T.destHint + DESTS.map(d => `<button type="button" data-pick="${d.name}">${d.name}</button>`).join(isEn ? ', ' : '・');
   const dflt = new Date(); dflt.setDate(dflt.getDate() + 10);
   $('#date').value = isoOf(dflt);
 
@@ -2921,9 +3061,9 @@ function init() {
   const preset = window.PRESET;
   const last = store.get('last', null);
   if (fromQuery) writeParams(fromQuery);
-  else if (preset) writeParams({from: last?.from || '千代田区', fromCode: last ? last.fromCode : '13101', interests: [], ...preset});
+  else if (preset) writeParams({from: last?.from || T.dfltFrom, fromCode: last ? last.fromCode : '13101', interests: [], ...preset});
   else if (last) writeParams({...last, date: last.date && new Date(last.date) >= new Date(isoOf(new Date())) ? last.date : isoOf(dflt)});
-  else writeParams({from: '千代田区', fromCode: '13101', to: '京都市', toCode: '26P10', nights: 2, interests: ['history', 'food']});
+  else writeParams({from: T.dfltFrom, fromCode: '13101', to: isEn ? 'Kyoto' : '京都市', toCode: '26P10', nights: 2, interests: ['history', 'food']});
 
   $('#tripForm').addEventListener('submit', e => { e.preventDefault(); generate(); });
   document.addEventListener('click', e => {
@@ -2960,17 +3100,17 @@ function init() {
     if (el.dataset.rm != null) { const list = store.get('saved', []); list.splice(+el.dataset.rm, 1); store.set('saved', list); render(); return; }
     switch (el.id) {
       case 'shuffle': generate(newSeed()); break;
-      case 'copyText': copy(planText(), 'コピーしました'); break;
-      case 'copyLink': copy(location.origin + location.pathname + '?' + paramsToQuery(state.params, state.seed), '共有リンクをコピーしました'); break;
+      case 'copyText': copy(planText(), T.copied); break;
+      case 'copyLink': copy(location.origin + location.pathname + '?' + paramsToQuery(state.params, state.seed), T.linkCopied); break;
       case 'save': {
         const plan = state.plans[state.active];
         const list = store.get('saved', []);
         const {params, dest, from, tr} = state;
-        list.unshift({title: `${dest.name} ${params.nights ? params.nights + '泊' + (params.nights + 1) + '日' : '日帰り'}・${VARIANTS[plan.variant].label}(${dayLabel(params.date, 0) || '日付なし'})`,
+        list.unshift({title: T.savedTitleFmt(dest.name, T.dur(params.nights), VARIANTS[plan.variant].label, dayLabel(params.date, 0) || T.noDate),
           params, seed: state.seed, variant: plan.variant, from, tr, dest: dest.wiki ? dest : null,
           days: plan.days.map(d => ({spots: d.spots.map(s => s.name), night: d.night?.name || null}))});
         store.set('saved', list.slice(0, 20));
-        render(); toast('保存しました'); break;
+        render(); toast(T.saved); break;
       }
     }
   });

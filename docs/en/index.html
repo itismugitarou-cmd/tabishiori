@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Tabishiori | Free Japan Itinerary Planner: Famous Sights &amp; Hidden Gems</title>
+<meta name="description" content="Free Japan trip planner. Enter where you start, where you go and how many days, and get three itineraries mixing famous sights with hidden gems, for any city, town or village in Japan.">
+<link rel="canonical" href="https://itismugitarou-cmd.github.io/tabishiori/en/">
+<link rel="alternate" hreflang="ja" href="https://itismugitarou-cmd.github.io/tabishiori/">
+<link rel="alternate" hreflang="en" href="https://itismugitarou-cmd.github.io/tabishiori/en/">
+<link rel="alternate" hreflang="x-default" href="https://itismugitarou-cmd.github.io/tabishiori/en/">
+<meta property="og:title" content="Tabishiori | Free Japan Itinerary Planner: Famous Sights &amp; Hidden Gems">
+<meta property="og:description" content="Free Japan trip planner. Enter where you start, where you go and how many days, and get three itineraries mixing famous sights with hidden gems, for any city, town or village in Japan.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://itismugitarou-cmd.github.io/tabishiori/en/">
+<meta property="og:site_name" content="Tabishiori">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="ja_JP">
+<meta property="og:image" content="https://itismugitarou-cmd.github.io/tabishiori/assets/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#24407c">
+<link rel="icon" href="../assets/icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=IBM+Plex+Mono:wght@500;600&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=IBM+Plex+Mono:wght@500;600&display=swap"></noscript>
+<link rel="stylesheet" href="../assets/style.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"Tabishiori","alternateName":"たびしおり","url":"https://itismugitarou-cmd.github.io/tabishiori/en/","inLanguage":"en"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Tabishiori","url":"https://itismugitarou-cmd.github.io/tabishiori/en/","applicationCategory":"TravelApplication","operatingSystem":"Any","inLanguage":"en","offers":{"@type":"Offer","price":"0","priceCurrency":"JPY"}}</script>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a href="./" style="text-decoration:none"><div class="logo">Tabi<b>shiori</b></div></a>
+    <h1 class="tagline">Free Japan trip planner: pick where you start, where you go and how long. Get an itinerary that mixes famous sights with hidden gems.</h1><a class="lang" href="https://itismugitarou-cmd.github.io/tabishiori/" hreflang="ja" lang="ja">日本語</a>
+  </div>
+</header>
+
+<main class="wrap layout">
+  <form id="tripForm" class="panel" autocomplete="off">
+    <h2>Your trip</h2>
+    <div class="field">
+      <label for="from">Starting from</label>
+      <input type="text" id="from" placeholder="Search a city or town (e.g. Nagoya, Setagaya)">
+      <div class="hint" id="fromPicked"></div>
+    </div>
+    <div class="field">
+      <label for="to">Destination</label>
+      <input type="text" id="to" placeholder="Search a city or town (e.g. Takayama, Otaru)">
+      <div class="hint" id="toPicked"></div>
+      <div class="hint" id="destHint"></div>
+    </div>
+    <div class="row2">
+      <div class="field">
+        <label for="date">Start date</label>
+        <input type="date" id="date">
+      </div>
+      <div class="field">
+        <label for="nights">Length</label>
+        <select id="nights"></select>
+      </div>
+    </div>
+    <div class="field">
+      <span class="legend">Pace</span>
+      <div class="seg" role="radiogroup" aria-label="Pace">
+        <label><input type="radio" name="pace" id="paceSlow" value="slow"><span>Relaxed</span></label>
+        <label><input type="radio" name="pace" id="paceNormal" value="normal" checked><span>Moderate</span></label>
+        <label><input type="radio" name="pace" id="paceMany" value="many"><span>Packed</span></label>
+      </div>
+    </div>
+    <div class="field">
+      <span class="legend">Plan style</span>
+      <div class="seg" role="radiogroup" aria-label="Plan style">
+        <label><input type="radio" name="style" id="styleF" value="0"><span>Classic</span></label>
+        <label><input type="radio" name="style" id="styleB" value="1" checked><span>Best of both</span></label>
+        <label><input type="radio" name="style" id="styleH" value="2"><span>Off the beaten path</span></label>
+      </div>
+      <div class="hint">We build all three so you can compare them.</div>
+    </div>
+    <div class="field">
+      <span class="legend">Interests</span>
+      <div class="chips" id="interests"></div>
+    </div>
+    <div class="row2">
+      <div class="field">
+        <label for="budget">Budget</label>
+        <select id="budget">
+          <option value="low">Budget</option>
+          <option value="mid" selected>Standard</option>
+          <option value="high">Splurge</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="people">Travelers</label>
+        <input type="number" id="people" min="1" max="20" value="2">
+      </div>
+    </div>
+    <label class="toggle"><input type="checkbox" id="rain"> Rainy-day mode (prefer indoor spots)</label>
+    <button type="submit" class="go">Make my itinerary</button>
+  </form>
+
+  <section class="result" id="result" aria-live="polite">
+    <div class="loading">Preparing your plan…</div>
+  </section>
+</main>
+<section class="wrap seo"><div><h2>How Tabishiori works</h2><p>Tabishiori is a free trip planner for Japan. Enter where you start, where you want to go and how many days you have, and it builds three day-by-day itineraries: one with the classic highlights, one with hidden gems, and one in between. It covers all 1,894 cities, towns and villages in Japan, with hand-picked spots for popular destinations like Tokyo, Kyoto and Osaka. Each plan includes estimated travel time and budget, a weather forecast, a packing list and links to find a place to stay.</p></div><h2>Find your destination</h2><div><h3>Destinations with curated spots</h3><ul class="linkgrid"><li><a href="./course/tokyo.html">Tokyo</a></li><li><a href="./course/26P10.html">Kyoto</a></li><li><a href="./course/27P10.html">Osaka</a></li><li><a href="./course/29201.html">Nara</a></li><li><a href="./course/17201.html">Kanazawa</a></li><li><a href="./course/01P10.html">Sapporo</a></li><li><a href="./course/40P13.html">Fukuoka</a></li><li><a href="./course/47201.html">Okinawa</a></li><li><a href="./course/34P10.html">Hiroshima</a></li><li><a href="./course/14382.html">Hakone</a></li><li><a href="./course/14204.html">Kamakura</a></li><li><a href="./course/04P10.html">Sendai</a></li><li><a href="./course/42201.html">Nagasaki</a></li></ul></div><div><h3>Browse by prefecture</h3><ul class="linkgrid"><li><a href="./pref/01.html">Hokkaido</a></li><li><a href="./pref/02.html">Aomori</a></li><li><a href="./pref/03.html">Iwate</a></li><li><a href="./pref/04.html">Miyagi</a></li><li><a href="./pref/05.html">Akita</a></li><li><a href="./pref/06.html">Yamagata</a></li><li><a href="./pref/07.html">Fukushima</a></li><li><a href="./pref/08.html">Ibaraki</a></li><li><a href="./pref/09.html">Tochigi</a></li><li><a href="./pref/10.html">Gunma</a></li><li><a href="./pref/11.html">Saitama</a></li><li><a href="./pref/12.html">Chiba</a></li><li><a href="./pref/13.html">Tokyo</a></li><li><a href="./pref/14.html">Kanagawa</a></li><li><a href="./pref/15.html">Niigata</a></li><li><a href="./pref/16.html">Toyama</a></li><li><a href="./pref/17.html">Ishikawa</a></li><li><a href="./pref/18.html">Fukui</a></li><li><a href="./pref/19.html">Yamanashi</a></li><li><a href="./pref/20.html">Nagano</a></li><li><a href="./pref/21.html">Gifu</a></li><li><a href="./pref/22.html">Shizuoka</a></li><li><a href="./pref/23.html">Aichi</a></li><li><a href="./pref/24.html">Mie</a></li><li><a href="./pref/25.html">Shiga</a></li><li><a href="./pref/26.html">Kyoto</a></li><li><a href="./pref/27.html">Osaka</a></li><li><a href="./pref/28.html">Hyogo</a></li><li><a href="./pref/29.html">Nara</a></li><li><a href="./pref/30.html">Wakayama</a></li><li><a href="./pref/31.html">Tottori</a></li><li><a href="./pref/32.html">Shimane</a></li><li><a href="./pref/33.html">Okayama</a></li><li><a href="./pref/34.html">Hiroshima</a></li><li><a href="./pref/35.html">Yamaguchi</a></li><li><a href="./pref/36.html">Tokushima</a></li><li><a href="./pref/37.html">Kagawa</a></li><li><a href="./pref/38.html">Ehime</a></li><li><a href="./pref/39.html">Kochi</a></li><li><a href="./pref/40.html">Fukuoka</a></li><li><a href="./pref/41.html">Saga</a></li><li><a href="./pref/42.html">Nagasaki</a></li><li><a href="./pref/43.html">Kumamoto</a></li><li><a href="./pref/44.html">Oita</a></li><li><a href="./pref/45.html">Miyazaki</a></li><li><a href="./pref/46.html">Kagoshima</a></li><li><a href="./pref/47.html">Okinawa</a></li></ul></div></section>
+
+<footer class="foot">
+  <div class="wrap">Times, prices and opening hours are estimates. Please check official information before you go. Weather by Open-Meteo; destinations without curated spots use Wikipedia. This site contains affiliate links (marked PR). <a href="./privacy.html">Privacy policy</a></div>
+</footer>
+
+<script src="../assets/app.en.js" defer></script>
+</body>
+</html>
