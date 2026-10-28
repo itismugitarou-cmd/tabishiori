@@ -50,7 +50,7 @@ for (pi, pn), par in parents.items():
     out.append([par['code'], par['pref'], pn, kana_parent(par), round(statistics.median(p[0] for p in par['pts']), 4), round(statistics.median(p[1] for p in par['pts']), 4)])
 for code, c in cities.items():
     n, k, gun = c['name'], c['kana'], ''
-    if '郡' in n[:-1] and not n.endswith('区'):
+    if '郡' in n[1:-1] and n[-1] in '町村':
         i = n.index('郡'); gun, n = n[:i + 1], n[i + 1:]
         if 'ぐん' in k: k = k[k.index('ぐん') + 2:]
     c['name'], c['kana'], c['gun'] = n, k, gun
@@ -59,5 +59,5 @@ out.sort(key=lambda x: (x[1], x[0].replace('P', '0')))
 with open(sys.argv[2], 'w', encoding='utf-8') as f:
     f.write('// 全国の市区町村: [コード, 都道府県番号, 名前, よみ, 緯度, 経度, 郡](出典: geolonia/japanese-addresses、町丁目の中央値)\n')
     f.write('const PREFS = ' + json.dumps(prefs, ensure_ascii=False) + ';\n')
-    f.write('const MUNIS = [\n' + ',\n'.join(json.dumps(o, ensure_ascii=False, separators=(',', ':')) for o in out) + '\n].map(([code,pref,name,kana,lat,lng,gun])=>({code,pref:PREFS[pref],name,kana,lat,lng,gun:gun||''}));\n')
+    f.write('const MUNIS = [\n' + ',\n'.join(json.dumps(o, ensure_ascii=False, separators=(',', ':')) for o in out) + '\n].map(([code,pref,name,kana,lat,lng,gun])=>({code,pref:PREFS[pref],name,kana,lat,lng,gun:gun||""}));\n')
 print(len(out), 'munis', len(prefs), 'prefs')

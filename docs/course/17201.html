@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>金沢市(石川県)の観光モデルコース|定番と穴場の旅程表 - たびしおり</title>
+<meta name="description" content="石川県金沢市の観光モデルコースを自動作成。有名スポットと穴場をまぜた日帰り・1泊2日・2泊3日の旅程表を、出発地や好みに合わせて作れます。">
+<link rel="canonical" href="https://itismugitarou-cmd.github.io/tabishiori/course/17201.html">
+<meta property="og:title" content="金沢市(石川県)の観光モデルコース|定番と穴場の旅程表 - たびしおり">
+<meta property="og:description" content="石川県金沢市の観光モデルコースを自動作成。有名スポットと穴場をまぜた日帰り・1泊2日・2泊3日の旅程表を、出発地や好みに合わせて作れます。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://itismugitarou-cmd.github.io/tabishiori/course/17201.html">
+<meta property="og:site_name" content="たびしおり">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a href="../" style="text-decoration:none"><div class="logo">たび<b>しおり</b></div></a>
+    <div class="tagline">出発地と行き先、泊数を入れるだけ。定番と穴場をまぜた旅程表をつくります。</div>
+  </div>
+</header>
+
+<div class="wrap" style="padding-top:20px"><div class="crumbs"><a href="../">トップ</a> › <a href="../pref/17.html">石川県</a> › 金沢市</div>
+    <h1 class="logo" style="font-size:clamp(24px,4vw,32px)">金沢市の観光モデルコース</h1>
+    <p class="lead" style="margin:4px 0 0">加賀百万石の城下町。茶屋街と庭園、現代アートがコンパクトにまとまっていて歩いて回れます。 出発地と日数を選ぶと、金沢市の定番スポットと穴場をまぜた旅程表を3パターン作ります。</p></div>
+<main class="wrap layout">
+  <form id="tripForm" class="panel" autocomplete="off">
+    <h2>旅の条件</h2>
+    <div class="field">
+      <label for="from">出発地</label>
+      <input type="text" id="from" placeholder="市区町村名で検索(例:名古屋市、せたがや)">
+      <div class="hint" id="fromPicked"></div>
+    </div>
+    <div class="field">
+      <label for="to">行き先</label>
+      <input type="text" id="to" placeholder="市区町村名で検索(例:高山市、おたる)">
+      <div class="hint" id="toPicked"></div>
+      <div class="hint" id="destHint"></div>
+    </div>
+    <div class="row2">
+      <div class="field">
+        <label for="date">出発日</label>
+        <input type="date" id="date">
+      </div>
+      <div class="field">
+        <label for="nights">日数</label>
+        <select id="nights"></select>
+      </div>
+    </div>
+    <div class="field">
+      <span class="legend">旅のペース</span>
+      <div class="seg" role="radiogroup" aria-label="旅のペース">
+        <label><input type="radio" name="pace" id="paceSlow" value="slow"><span>ゆっくり</span></label>
+        <label><input type="radio" name="pace" id="paceNormal" value="normal" checked><span>ふつう</span></label>
+        <label><input type="radio" name="pace" id="paceMany" value="many"><span>たくさん回る</span></label>
+      </div>
+    </div>
+    <div class="field">
+      <span class="legend">プランの味つけ</span>
+      <div class="seg" role="radiogroup" aria-label="プランの味つけ">
+        <label><input type="radio" name="style" id="styleF" value="0"><span>定番</span></label>
+        <label><input type="radio" name="style" id="styleB" value="1" checked><span>いいとこどり</span></label>
+        <label><input type="radio" name="style" id="styleH" value="2"><span>マニアック</span></label>
+      </div>
+      <div class="hint">3種類とも作るので、あとで見比べられます</div>
+    </div>
+    <div class="field">
+      <span class="legend">興味のあること</span>
+      <div class="chips" id="interests"></div>
+    </div>
+    <div class="row2">
+      <div class="field">
+        <label for="budget">予算感</label>
+        <select id="budget">
+          <option value="low">節約</option>
+          <option value="mid" selected>ふつう</option>
+          <option value="high">ちょっと贅沢</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="people">人数</label>
+        <input type="number" id="people" min="1" max="20" value="2">
+      </div>
+    </div>
+    <label class="toggle"><input type="checkbox" id="rain"> 雨の日モード(屋内スポット優先)</label>
+    <button type="submit" class="go">プランをつくる</button>
+  </form>
+
+  <section class="result" id="result" aria-live="polite">
+    <div class="loading">プランを準備しています…</div>
+  </section>
+</main>
+<section class="wrap seo"><h2>金沢市の定番スポット</h2><ul class="spotlist"><li><b>ひがし茶屋街</b>(街歩き・滞在約1.5時間):金箔ソフトと町家の喫茶店でひと休み</li><li><b>近江町市場</b>(グルメ・滞在約1時間):海鮮丼は朝から昼が狙い目</li><li><b>兼六園</b>(自然・滞在約1.5時間):早朝から開園。徽軫灯籠の前で記念撮影</li><li><b>金沢城公園</b>(歴史・滞在約1時間):兼六園と隣り合っていて一緒に回れる</li><li><b>金沢21世紀美術館</b>(美術館・滞在約2時間):「スイミング・プール」は人気なので早めに</li></ul>
+      <h2>金沢市の穴場スポット</h2><ul class="spotlist"><li><b>主計町茶屋街</b>(街歩き・滞在約0.5時間):浅野川沿いの小さな茶屋街。夜の灯りが美しい</li><li><b>鈴木大拙館</b>(美術館・滞在約1時間):水鏡の庭を眺めて静かに過ごす思索の空間</li><li><b>尾山神社</b>(寺社・滞在約0.5時間):ステンドグラスが入った和洋折衷の神門</li><li><b>石川県立図書館</b>(博物館・滞在約1時間):円形の吹き抜けが壮観な「本のコロシアム」</li><li><b>長町武家屋敷跡</b>(歴史・滞在約1時間):土塀の路地と野村家庭園</li><li><b>妙立寺(忍者寺)</b>(歴史・滞在約1時間):隠し階段や落とし穴の仕掛け。電話予約制</li><li><b>にし茶屋街</b>(街歩き・滞在約0.5時間):ひがしより静かでこぢんまり。甘納豆の老舗も</li></ul>
+      <div><h3>名物グルメ</h3><p>海鮮丼(近江町市場)、治部煮、金沢おでん、ハントンライス</p></div><div><h3>泊まるエリア</h3><p>金沢駅周辺か、香林坊・片町周辺が観光にもごはんにも便利です。</p></div><div><h3>金沢市の近くの市区町村</h3><ul class="linkgrid"><li><a href="../course/17212.html">野々市市</a></li><li><a href="../course/17365.html">内灘町</a></li><li><a href="../course/17210.html">白山市</a></li><li><a href="../course/17361.html">津幡町</a></li><li><a href="../course/17324.html">川北町</a></li><li><a href="../course/17209.html">かほく市</a></li><li><a href="../course/17211.html">能美市</a></li><li><a href="../course/16209.html">小矢部市</a></li><li><a href="../course/16210.html">南砺市</a></li><li><a href="../course/16208.html">砺波市</a></li></ul></div><p><a href="../pref/17.html">石川県のほかの市区町村を見る</a></p></section>
+
+<footer class="foot">
+  <div class="wrap">所要時間・料金・営業情報は目安です。お出かけ前に各施設の公式情報をご確認ください。天気予報は Open-Meteo、登録外の行き先は Wikipedia の情報を使っています。当サイトはアフィリエイト広告(PR)を利用しています。 <a href="../privacy.html">プライバシーポリシー</a></div>
+</footer>
+
+<script>window.PRESET={"to":"金沢市","toCode":"17201","nights":2};</script>
+<script src="../assets/app.js"></script>
+</body>
+</html>

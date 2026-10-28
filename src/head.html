@@ -66,8 +66,8 @@ input[type=text],input[type=date],input[type=number],select{width:100%;padding:1
 .result{display:flex;flex-direction:column;gap:20px;min-width:0}
 .dest-head{display:flex;flex-direction:column;gap:4px}
 .route{font-size:13px;color:var(--muted);letter-spacing:.06em}
-.dest-head h1{margin:0;font-family:var(--f-display);font-weight:400;font-size:clamp(26px,4vw,38px);line-height:1.25;text-wrap:balance}
-.dest-head h1 small{font-family:var(--f-body);font-size:.5em;font-weight:700;color:var(--muted);margin-left:.4em;letter-spacing:.04em}
+.dest-head h2{margin:0;font-family:var(--f-display);font-weight:400;font-size:clamp(26px,4vw,38px);line-height:1.25;text-wrap:balance}
+.dest-head h2 small{font-family:var(--f-body);font-size:.5em;font-weight:700;color:var(--muted);margin-left:.4em;letter-spacing:.04em}
 .lead{margin:0;color:var(--muted);max-width:65ch}
 .notice{background:var(--shu-soft);border-radius:10px;padding:12px 14px;font-size:14px}
 
@@ -148,6 +148,24 @@ input[type=text],input[type=date],input[type=number],select{width:100%;padding:1
 .sugg li em{font-style:normal;font-size:11px;font-weight:700;color:var(--shu);margin-left:auto}
 .sugg li[aria-selected="true"],.sugg li:hover{background:var(--ai-soft)}
 #fromPicked:empty,#toPicked:empty{display:none}
+.pr{font-size:10px;font-weight:700;letter-spacing:.08em;color:var(--muted);border:1px solid var(--line);border-radius:4px;padding:0 5px;align-self:center}
+.book{background:var(--card);border:1.5px solid var(--ai);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:10px}
+.book-h{display:flex;gap:10px;align-items:center}
+.book h4{margin:0;font-size:16px}
+.book p{margin:0;font-size:14px}
+.book-links{display:flex;flex-wrap:wrap;gap:8px}
+.btn-book{display:inline-block;padding:10px 16px;border-radius:10px;background:var(--ai);color:var(--card);text-decoration:none;font-weight:700;font-size:14px}
+.btn-book.alt{background:var(--card);color:var(--ai);border:1.5px solid var(--ai)}
+.btn-book:hover{filter:brightness(1.08)}
+.seo{padding-block:8px 40px;display:flex;flex-direction:column;gap:18px;max-width:900px}
+.seo h2{font-family:var(--f-display);font-weight:400;font-size:22px;margin:0;letter-spacing:.03em}
+.seo h3{font-size:16px;margin:0 0 6px}
+.seo p{margin:0;max-width:65ch}
+.linkgrid{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:14px;list-style:none;padding:0;margin:0}
+.spotlist{margin:0;padding-left:1.2em}
+.spotlist li{margin-bottom:4px}
+.crumbs{font-size:13px;color:var(--muted)}
+.foot a{color:var(--muted)}
 .foot{border-top:1px solid var(--line);color:var(--muted);font-size:12px}
 .foot .wrap{padding-block:18px}
 .loading{padding:30px;text-align:center;color:var(--muted)}

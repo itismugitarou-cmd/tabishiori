@@ -464,6 +464,10 @@ function routeLink(day, dest) {
   return `https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(o)}&destination=${encodeURIComponent(dst)}${rest.length ? '&waypoints=' + encodeURIComponent(rest.join('|')) : ''}&travelmode=transit`;
 }
 
+const hotelKeyword = dest => dest.wiki && dest.pref ? dest.pref + dest.name : dest.name;
+const needsCar = dest => dest.id === 'okinawa' || !!dest.wiki;
+const prLinks = (providers, arg, cls = '') => providers.map(p => `<a class="${cls}" href="${esc(p.url(arg))}" target="_blank" rel="noopener sponsored">${esc(p.label)}</a>`).join('');
+
 function render() {
   const st = state, {params, dest, tr, from} = st;
   const plan = st.plans[st.active];
@@ -493,7 +497,8 @@ function render() {
           <button type="button" data-swap="${d}:${it.i}">ほかの場所にする</button><button type="button" data-del="${d}:${it.i}">外す</button></div>
         </div></div></li>`;
       }
-      return `<li class="${it.type}"><time>${fmtT(it.t)}</time><span class="dot"></span><div class="ev"><div class="t">${esc(it.title)}</div>${it.sub ? `<div class="sub">${esc(it.sub)}</div>` : ''}</div></li>`;
+      const book = it.type === 'stay' ? `<div class="sacts"><span class="pr">PR</span>${prLinks(HOTEL_PROVIDERS, hotelKeyword(dest))}</div>` : '';
+      return `<li class="${it.type}"><time>${fmtT(it.t)}</time><span class="dot"></span><div class="ev"><div class="t">${esc(it.title)}</div>${it.sub ? `<div class="sub">${esc(it.sub)}</div>` : ''}${book}</div></li>`;
     }).join('');
     const rl = routeLink(day, dest);
     return `<article class="day"><div class="day-h"><h3><span class="no">${d + 1}日目</span>${dayLabel(params.date, d)}</h3><span class="wx" data-wx="${d}"></span></div>
@@ -508,7 +513,7 @@ function render() {
   $('#result').innerHTML = `
     <div class="dest-head">
       <div class="route">${esc(from.name)} → ${esc(dest.name)}</div>
-      <h1>${esc(dest.name)} ${durLabel}<small>${PACE[params.pace].label}・${params.people}人</small></h1>
+      <h2 class="plan-title">${esc(dest.name)} ${durLabel}<small>${PACE[params.pace].label}・${params.people}人</small></h2>
       <p class="lead">${esc(dest.lead)}</p>
     </div>
     ${st.notice ? `<div class="notice">${st.notice}</div>` : ''}
@@ -532,9 +537,14 @@ function render() {
     </div>
     <div class="legendrow"><span class="tag-f">定番</span>有名な観光地 <span class="stamp">穴場</span>知る人ぞ知る場所 <span class="rain" style="color:var(--matcha);font-weight:700">雨でもOK</span>屋内で楽しめる</div>
     ${days}
+    <div class="book">
+      <div class="book-h"><h4>${esc(dest.name)}の宿をさがす</h4><span class="pr">PR</span></div>
+      <p>${esc(dest.stay)}</p>
+      <div class="book-links">${prLinks(HOTEL_PROVIDERS, hotelKeyword(dest), 'btn-book')}${needsCar(dest) ? prLinks(CAR_PROVIDERS, null, 'btn-book alt') : ''}</div>
+      ${needsCar(dest) ? '<p class="hint" style="margin:0">見どころが離れているので、レンタカーがあると回りやすい行き先です。</p>' : ''}
+    </div>
     <div class="extras">
-      <div class="box"><h4>${esc(dest.name)}で食べたいもの</h4>${dest.foods.length ? `<ul>${dest.foods.map(f => `<li>${esc(f)}</li>`).join('')}</ul>` : '<p class="hint">地元の人が並ぶ店を探してみてください。</p>'}
-        <h4 style="margin-top:12px">泊まるエリア</h4><p style="margin:0;font-size:14px">${esc(dest.stay)}</p></div>
+      <div class="box"><h4>${esc(dest.name)}で食べたいもの</h4>${dest.foods.length ? `<ul>${dest.foods.map(f => `<li>${esc(f)}</li>`).join('')}</ul>` : '<p class="hint" style="margin:0">地元の人が並ぶ店や、道の駅の食堂を探してみてください。</p>'}</div>
       <div class="box"><h4>持ち物チェックリスト</h4><ul class="pack">${pack.map((p, i) => `<li><label><input type="checkbox" id="pk${i}" data-pack="${esc(p)}" ${checked[p] ? 'checked' : ''}><span>${esc(p)}</span></label></li>`).join('')}</ul></div>
       <div class="box" style="grid-column:1/-1"><h4>保存したプラン</h4>${saved.length ? `<ul class="saved">${saved.map((s, i) => `<li><span>${esc(s.title)}</span><span style="display:flex;gap:6px;flex:none"><button type="button" class="btn" data-open="${i}">開く</button><button type="button" class="btn" data-rm="${i}">削除</button></span></li>`).join('')}</ul>` : '<p class="hint" style="margin:0">「このプランを保存」を押すと、このブラウザに保存されて後から開けます。</p>'}</div>
     </div>`;
@@ -663,8 +673,10 @@ function init() {
   $('#date').value = isoOf(dflt);
 
   const fromQuery = queryToParams();
+  const preset = window.PRESET;
   const last = store.get('last', null);
   if (fromQuery) writeParams(fromQuery);
+  else if (preset) writeParams({from: last?.from || '千代田区', fromCode: last ? last.fromCode : '13101', interests: [], ...preset});
   else if (last) writeParams({...last, date: last.date && new Date(last.date) >= new Date(isoOf(new Date())) ? last.date : isoOf(dflt)});
   else writeParams({from: '千代田区', fromCode: '13101', to: '京都市', toCode: '26P10', nights: 2, interests: ['history', 'food']});
 
