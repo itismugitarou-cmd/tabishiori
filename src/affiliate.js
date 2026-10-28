@@ -2,7 +2,7 @@
 //   rakuten: 楽天アフィリエイトの「アフィリエイトID」(例 '1a2b3c4d.5e6f7a8b.1a2b3c4d.5e6f7a8b')
 //   booking: Booking.com アフィリエイトパートナーの aid(数字)
 const AFFILIATE = {
-  rakuten: '',
+  rakuten: '58e6d169.c6e4fe6f.58e6d16a.fa742637',
   booking: ''
 };
 
