@@ -55,7 +55,7 @@ function page({file, title, desc, preset, top = '', seo = '', planner = true}) {
 <meta property="og:description" content="${esc(desc)}">
 <meta property="og:type" content="website">
 <meta property="og:url" content="${url}">
-<meta property="og:site_name" content="たびしおり">
+<meta property="og:site_name" content="たびしおり">${file === 'index.html' ? '\n<meta name="google-site-verification" content="4kcysmogNbSzovXMaNiryw_1RdM1XnSdOJ55uu395NM">' : ''}
 ${fontLinks}
 <link rel="stylesheet" href="${pre}assets/style.css">
 </head>
