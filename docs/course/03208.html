@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>遠野市(岩手県)の観光モデルコース|定番と穴場の旅程表 - たびしおり</title>
+<meta name="description" content="岩手県遠野市の観光モデルコースを自動作成。有名スポットと穴場をまぜた日帰り・1泊2日・2泊3日の旅程表を、出発地や好みに合わせて作れます。">
+<link rel="canonical" href="https://itismugitarou-cmd.github.io/tabishiori/course/03208.html">
+<meta property="og:title" content="遠野市(岩手県)の観光モデルコース|定番と穴場の旅程表 - たびしおり">
+<meta property="og:description" content="岩手県遠野市の観光モデルコースを自動作成。有名スポットと穴場をまぜた日帰り・1泊2日・2泊3日の旅程表を、出発地や好みに合わせて作れます。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://itismugitarou-cmd.github.io/tabishiori/course/03208.html">
+<meta property="og:site_name" content="たびしおり">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a href="../" style="text-decoration:none"><div class="logo">たび<b>しおり</b></div></a>
+    <div class="tagline">出発地と行き先、泊数を入れるだけ。定番と穴場をまぜた旅程表をつくります。</div>
+  </div>
+</header>
+
+<div class="wrap" style="padding-top:20px"><div class="crumbs"><a href="../">トップ</a> › <a href="../pref/03.html">岩手県</a> › 遠野市</div>
+    <h1 class="logo" style="font-size:clamp(24px,4vw,32px)">遠野市の観光モデルコース</h1>
+    <p class="lead" style="margin:4px 0 0">出発地と日数を選ぶと、遠野市の定番スポットと穴場をまぜた旅程表を3パターン作ります。</p></div>
+<main class="wrap layout">
+  <form id="tripForm" class="panel" autocomplete="off">
+    <h2>旅の条件</h2>
+    <div class="field">
+      <label for="from">出発地</label>
+      <input type="text" id="from" placeholder="市区町村名で検索(例:名古屋市、せたがや)">
+      <div class="hint" id="fromPicked"></div>
+    </div>
+    <div class="field">
+      <label for="to">行き先</label>
+      <input type="text" id="to" placeholder="市区町村名で検索(例:高山市、おたる)">
+      <div class="hint" id="toPicked"></div>
+      <div class="hint" id="destHint"></div>
+    </div>
+    <div class="row2">
+      <div class="field">
+        <label for="date">出発日</label>
+        <input type="date" id="date">
+      </div>
+      <div class="field">
+        <label for="nights">日数</label>
+        <select id="nights"></select>
+      </div>
+    </div>
+    <div class="field">
+      <span class="legend">旅のペース</span>
+      <div class="seg" role="radiogroup" aria-label="旅のペース">
+        <label><input type="radio" name="pace" id="paceSlow" value="slow"><span>ゆっくり</span></label>
+        <label><input type="radio" name="pace" id="paceNormal" value="normal" checked><span>ふつう</span></label>
+        <label><input type="radio" name="pace" id="paceMany" value="many"><span>たくさん回る</span></label>
+      </div>
+    </div>
+    <div class="field">
+      <span class="legend">プランの味つけ</span>
+      <div class="seg" role="radiogroup" aria-label="プランの味つけ">
+        <label><input type="radio" name="style" id="styleF" value="0"><span>定番</span></label>
+        <label><input type="radio" name="style" id="styleB" value="1" checked><span>いいとこどり</span></label>
+        <label><input type="radio" name="style" id="styleH" value="2"><span>マニアック</span></label>
+      </div>
+      <div class="hint">3種類とも作るので、あとで見比べられます</div>
+    </div>
+    <div class="field">
+      <span class="legend">興味のあること</span>
+      <div class="chips" id="interests"></div>
+    </div>
+    <div class="row2">
+      <div class="field">
+        <label for="budget">予算感</label>
+        <select id="budget">
+          <option value="low">節約</option>
+          <option value="mid" selected>ふつう</option>
+          <option value="high">ちょっと贅沢</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="people">人数</label>
+        <input type="number" id="people" min="1" max="20" value="2">
+      </div>
+    </div>
+    <label class="toggle"><input type="checkbox" id="rain"> 雨の日モード(屋内スポット優先)</label>
+    <button type="submit" class="go">プランをつくる</button>
+  </form>
+
+  <section class="result" id="result" aria-live="polite">
+    <div class="loading">プランを準備しています…</div>
+  </section>
+</main>
+<section class="wrap seo"><h2>岩手県遠野市の旅のプランについて</h2><p>岩手県遠野市とその周辺にある神社仏閣、城跡、公園、美術館、市場などの見どころを集めて、よく知られた場所を「定番」、知る人ぞ知る場所を「穴場」として旅程に組み込みます。所要時間や営業時間は目安なので、お出かけ前に公式情報をご確認ください。</p><div><h3>遠野市の近くの市区町村</h3><ul class="linkgrid"><li><a href="../course/03441.html">住田町</a></li><li><a href="../course/03211.html">釜石市</a></li><li><a href="../course/03461.html">大槌町</a></li><li><a href="../course/03203.html">大船渡市</a></li><li><a href="../course/03210.html">陸前高田市</a></li><li><a href="../course/03482.html">山田町</a></li><li><a href="../course/03205.html">花巻市</a></li><li><a href="../course/03206.html">北上市</a></li><li><a href="../course/03215.html">奥州市</a></li><li><a href="../course/03321.html">紫波町</a></li></ul></div><p><a href="../pref/03.html">岩手県のほかの市区町村を見る</a></p></section>
+
+<footer class="foot">
+  <div class="wrap">所要時間・料金・営業情報は目安です。お出かけ前に各施設の公式情報をご確認ください。天気予報は Open-Meteo、登録外の行き先は Wikipedia の情報を使っています。当サイトはアフィリエイト広告(PR)を利用しています。 <a href="../privacy.html">プライバシーポリシー</a></div>
+</footer>
+
+<script>window.PRESET={"to":"遠野市","toCode":"03208","nights":1};</script>
+<script src="../assets/app.js"></script>
+</body>
+</html>
